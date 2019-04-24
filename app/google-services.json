@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1021572690986",
+    "firebase_url": "https://ntwbisco.firebaseio.com",
+    "project_id": "ntwbisco",
+    "storage_bucket": "ntwbisco.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021572690986:android:087e4690161bfe71",
+        "android_client_info": {
+          "package_name": "com.ntw.biscosrc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021572690986-odvt87i25qg1nseld1k6jgfs9fr7fkts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ntw.biscosrc",
+            "certificate_hash": "cf85040a20210fc9d6239431e5e2258812e566d9"
+          }
+        },
+        {
+          "client_id": "1021572690986-5aqlecv30iirl75falqr35n6kfvhq6ol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFMGZa5RdIbbNNqb6oBGdhDkHDCRHMENE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021572690986-5aqlecv30iirl75falqr35n6kfvhq6ol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
