@@ -156,10 +156,11 @@ public class ScannerActivity extends SwipeActivityClass implements ZXingScannerV
 
     @Override
     protected void onSwipeLeft() {
-        Intent intent = new Intent(ScannerActivity.this, MapsActivity.class);
-        startActivity(intent);
-        finish();
-        return;
+        //Intent intent = new Intent(ScannerActivity.this, MapsActivity.class);
+        //startActivity(intent);
+        //finish();
+        //return;
+        //to navigate to map
     }
 
     @Override
