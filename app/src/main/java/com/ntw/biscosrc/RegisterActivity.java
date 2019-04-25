@@ -65,14 +65,14 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Oops! Something went wrong.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, "Users already exists.", Toast.LENGTH_LONG).show();
                             } else {
                                 String user_id = mAuth.getCurrentUser().getUid();
                                 mDatabase = FirebaseDatabase.getInstance().getReference();
                                 mDatabase.child("users").child(user_id).child("name").setValue(name);
                                 mDatabase.child("users").child(user_id).child("email").setValue(email);
                                 mDatabase.child("users").child(user_id).child("phone").setValue(phone);
-                                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("users").child("riders").child(user_id);
+                                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
                                 current_user_db.setValue(true);
                             }
                         }
