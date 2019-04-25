@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">NTW_Bisco</string>
+    <string name="login">Already have an account?</string>
+    <string name="register">Don\'t have an account?</string>
+    <string name="disclaimer">By creating an account you agree to our Terms of Service and Privacy Policy</string>
 </resources>
