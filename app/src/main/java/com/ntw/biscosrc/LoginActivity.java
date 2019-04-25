@@ -79,4 +79,11 @@ public class LoginActivity extends AppCompatActivity {
         finish();
         return;
     }
+
+    public void reset(View v){
+        Intent intent = new Intent(LoginActivity.this, ResetActivity.class);
+        startActivity(intent);
+        finish();
+        return;
+    }
 }

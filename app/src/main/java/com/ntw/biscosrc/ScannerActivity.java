@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,7 +18,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
-public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class ScannerActivity extends SwipeActivityClass implements ZXingScannerView.ResultHandler {
 
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
@@ -44,7 +43,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     }
 
     private boolean checkPermission() {
-        return ( ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA ) == PackageManager.PERMISSION_GRANTED);
+        return (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED);
     }
 
     private void requestPermission() {
@@ -57,9 +56,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 if (grantResults.length > 0) {
 
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted){
+                    if (cameraAccepted) {
                         Toast.makeText(getApplicationContext(), "Please scan the code on a bike", Toast.LENGTH_LONG).show();
-                    }else {
+                    } else {
                         Toast.makeText(getApplicationContext(), "This service cannot be accessed unless camera permissions are granted", Toast.LENGTH_LONG).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(CAMERA)) {
@@ -81,6 +80,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 break;
         }
     }
+
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ScannerActivity.this)
                 .setMessage(message)
@@ -89,6 +89,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 .create()
                 .show();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -96,7 +97,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         int currentapiVersion = Build.VERSION.SDK_INT;
         if (currentapiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                if(mScannerView == null) {
+                if (mScannerView == null) {
                     mScannerView = new ZXingScannerView(this);
                     setContentView(mScannerView);
                 }
@@ -113,6 +114,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         super.onDestroy();
         mScannerView.stopCamera();
     }
+
     @Override
     public void handleResult(Result rawResult) {
 
@@ -121,27 +123,48 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Log.d("QRCodeScanner", rawResult.getBarcodeFormat().toString());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan Result");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle("Bike Selection");
+        builder.setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mScannerView.resumeCameraPreview(ScannerActivity.this);
-                finish();
-                return;
+                Toast.makeText(getApplicationContext(), "Please select a bike", Toast.LENGTH_LONG).show();
             }
         });
-        builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
                 startActivity(browserIntent);
                 finish();
-                return;
             }
         });
-        builder.setMessage(rawResult.getText());
+        builder.setMessage("Is this the bike you wish to ride?");
         AlertDialog alert1 = builder.create();
+        alert1.setCanceledOnTouchOutside(true);
+        alert1.setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mScannerView.resumeCameraPreview(ScannerActivity.this);
+                    }
+                }
+        );
         alert1.show();
         return;
+    }
+
+    @Override
+    protected void onSwipeLeft() {
+        //Intent intent = new Intent(ScannerActivity.this, MapsActivity.class);
+        //startActivity(intent);
+        //finish();
+        //return;
+        //to navigate to map
+    }
+
+    @Override
+    protected void onSwipeRight() {
+        Toast.makeText(getApplicationContext(), "Sike bitch. You thought!", Toast.LENGTH_LONG).show();
     }
 }
